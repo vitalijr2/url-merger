@@ -38,7 +38,7 @@
     .status.error { color: var(--danger); } .status.success { color: var(--success); }
     .details { margin-top: 22px; padding: 17px 18px; border-radius: 12px; background: #f7f9fd; border: 1px solid var(--border); }
     .details h2 { margin: 0 0 8px; font-size: 14px; } .details ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 13px; }
-    .details li+li { margin-top: 5px; } footer { margin: 18px 4px 0; color: var(--muted); font-size: 12px; text-align: center; }
+    .details li+li { margin-top: 5px; } footer { margin: 18px 4px 0; color: var(--muted); font-size: 12px; text-align: center; }\n    footer p { margin: 0 0 8px; } footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }\n    footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; } footer a:hover { color: var(--accent); }
     @media (max-width:560px) { body { padding: 22px 12px; } .panel { padding: 17px; border-radius: 14px; } .toolbar button { flex: 1 1 auto; } textarea { min-height: 190px; } }
   </style>
 </head>
@@ -78,7 +78,14 @@
         </ul>
       </div>
     </section>
-    <footer>Працює локально у сучасному браузері. Зовнішні бібліотеки та мережеві запити не використовуються.</footer>
+    <footer>
+      <p>Працює локально у сучасному браузері. Зовнішні бібліотеки та мережеві запити не використовуються.</p>
+      <nav aria-label="Посилання на проєкт">
+        <a href="https://github.com/vitalijr2/url-merger/issues/new/choose" target="_blank" rel="noopener noreferrer">Повідомити про помилку або запропонувати покращення</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/vitalijr2/url-merger" target="_blank" rel="noopener noreferrer">Репозиторій проєкту на GitHub</a>
+      </nav>
+    </footer>
   </main>
   <script>
     "use strict";
