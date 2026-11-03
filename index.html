@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>URL Merger — об'єднання параметрів URL</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb; --surface: #fff; --text: #172033; --muted: #647089;
+      --border: #dce2ec; --accent: #315eea; --accent-hover: #244bd0;
+      --danger: #b42318; --success: #18794e; --shadow: 0 12px 34px rgba(28,43,74,.08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 36px 18px; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width: min(860px,100%); margin: 0 auto; }
+    header { margin-bottom: 26px; }
+    .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(28px,5vw,38px); line-height: 1.15; letter-spacing: -.035em; }
+    .intro { max-width: 680px; margin: 12px 0 0; color: var(--muted); }
+    .panel { padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); }
+    label,.section-heading { display: block; margin-bottom: 9px; font-weight: 700; }
+    .hint { margin: -2px 0 13px; color: var(--muted); font-size: 13px; }
+    textarea,output.result { display: block; width: 100%; min-height: 210px; padding: 14px 15px; border: 1px solid var(--border); border-radius: 11px; background: #fbfcfe; color: var(--text); font: 13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; overflow-wrap: anywhere; resize: vertical; }
+    textarea:focus { outline: 3px solid rgba(49,94,234,.15); border-color: var(--accent); }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 15px; }
+    button { min-height: 42px; padding: 9px 16px; border: 1px solid transparent; border-radius: 9px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s,border-color .15s,transform .15s; }
+    button:active { transform: translateY(1px); }
+    button:focus-visible { outline: 3px solid rgba(49,94,234,.25); outline-offset: 2px; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    .primary { background: var(--accent); color: white; } .primary:hover:not(:disabled) { background: var(--accent-hover); }
+    .secondary { background: white; color: var(--text); border-color: var(--border); } .secondary:hover:not(:disabled) { background: #f7f9fc; }
+    .text-button { min-height: 36px; padding: 6px 9px; color: var(--muted); background: transparent; border: 0; font-weight: 600; }
+    .text-button:hover { color: var(--text); background: #f1f4f9; }
+    .result-section { margin-top: 25px; } .result { min-height: 78px !important; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .result.empty { color: #8a94a8; } .status { min-height: 22px; margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+    .status.error { color: var(--danger); } .status.success { color: var(--success); }
+    .details { margin-top: 22px; padding: 17px 18px; border-radius: 12px; background: #f7f9fd; border: 1px solid var(--border); }
+    .details h2 { margin: 0 0 8px; font-size: 14px; } .details ul { margin: 0; padding-left: 19px; color: var(--muted); font-size: 13px; }
+    .details li+li { margin-top: 5px; } footer { margin: 18px 4px 0; color: var(--muted); font-size: 12px; text-align: center; }
+    @media (max-width:560px) { body { padding: 22px 12px; } .panel { padding: 17px; border-radius: 14px; } .toolbar button { flex: 1 1 auto; } textarea { min-height: 190px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Локальний інструмент · без сервера</p>
+      <h1>URL Merger</h1>
+      <p class="intro">Об'єднай параметри запиту з кількох посилань в один URL. Уся обробка відбувається у твоєму браузері — посилання нікуди не надсилаються.</p>
+    </header>
+    <section class="panel" aria-label="Об'єднання URL">
+      <label for="urls">Вхідні URL</label>
+      <p class="hint">Встав кожне посилання з нового рядка. Порожні рядки ігноруються.</p>
+      <textarea id="urls" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="https://example.com/search?category=books,films&amp;page=1&#10;https://example.com/search?category=films,music&amp;page=2&#10;https://example.com/search?tag=new&amp;tag=sale"></textarea>
+      <div class="toolbar">
+        <button class="primary" id="merge" type="button">Об'єднати URL</button>
+        <button class="secondary" id="sample" type="button">Завантажити приклад</button>
+        <button class="text-button" id="clear" type="button">Очистити</button>
+      </div>
+      <div class="result-section">
+        <div class="section-heading">Результат</div>
+        <output class="result empty" id="result" aria-live="polite">Тут з'явиться об'єднане посилання.</output>
+        <div class="toolbar">
+          <button class="primary" id="copy" type="button" disabled>Копіювати результат</button>
+          <button class="secondary" id="download" type="button" disabled>Зберегти .txt</button>
+        </div>
+        <p class="status" id="status" role="status">Очікую на вхідні посилання.</p>
+      </div>
+      <div class="details">
+        <h2>Правила об'єднання</h2>
+        <ul>
+          <li>Усі URL мають мати однакові протокол, домен, порт, шлях і фрагмент (#...).</li>
+          <li>Параметри з різними назвами додаються до спільного запиту.</li>
+          <li>Якщо хоча б одне значення параметра містить кому, усі його значення об'єднуються в один список; дублікати прибираються, порядок першої появи зберігається.</li>
+          <li>Параметри без значень через кому залишаються окремими входженнями, зокрема повторювані ключі.</li>
+          <li>Порожні значення та параметри без значення зберігаються як порожні значення.</li>
+        </ul>
+      </div>
+    </section>
+    <footer>Працює локально у сучасному браузері. Зовнішні бібліотеки та мережеві запити не використовуються.</footer>
+  </main>
+  <script>
+    "use strict";
+    const input=document.getElementById("urls"), result=document.getElementById("result"), status=document.getElementById("status");
+    const copyButton=document.getElementById("copy"), downloadButton=document.getElementById("download");
+    let mergedUrl="";
+    function setStatus(message,type=""){status.textContent=message;status.className="status"+(type?" "+type:"");}
+    function parseInputLines(text){return text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);}
+    function mergeUrls(rawUrls){
+      if(rawUrls.length===0) throw new Error("Додай хоча б одне URL.");
+      const parsed=rawUrls.map((raw,index)=>{
+        let url; try{url=new URL(raw);}catch{throw new Error(`Рядок ${index+1}: некоректний URL — ${raw}`);}
+        if(url.protocol!=="http:"&&url.protocol!=="https:") throw new Error(`Рядок ${index+1}: підтримуються лише HTTP та HTTPS URL.`);
+        if(url.username||url.password) throw new Error(`Рядок ${index+1}: URL з логіном або паролем не підтримуються.`);
+        return url;
+      });
+      const base=parsed[0], sameResource=url=>url.origin===base.origin&&url.pathname===base.pathname&&url.hash===base.hash;
+      const mismatchIndex=parsed.findIndex(url=>!sameResource(url));
+      if(mismatchIndex!==-1) throw new Error(`Рядок ${mismatchIndex+1}: URL має інший протокол, домен, порт, шлях або фрагмент. Об'єднувати можна лише посилання на один ресурс.`);
+      const groups=new Map();
+      for(const url of parsed) for(const [key,value] of url.searchParams.entries()){if(!groups.has(key))groups.set(key,[]);groups.get(key).push(value);}
+      const outputParams=new URLSearchParams();
+      for(const [key,values] of groups){
+        if(values.some(value=>value.includes(","))){
+          const uniqueValues=[],seen=new Set();
+          for(const value of values) for(const item of value.split(",")) if(!seen.has(item)){seen.add(item);uniqueValues.push(item);}
+          outputParams.append(key,uniqueValues.join(","));
+        }else for(const value of values) outputParams.append(key,value);
+      }
+      const output=new URL(base.origin+base.pathname); output.search=outputParams.toString(); output.hash=base.hash; return output.href;
+    }
+    function showResult(value){mergedUrl=value;result.textContent=value;result.classList.remove("empty");copyButton.disabled=false;downloadButton.disabled=false;}
+    function resetResult(){mergedUrl="";result.textContent="Тут з'явиться об'єднане посилання.";result.classList.add("empty");copyButton.disabled=true;downloadButton.disabled=true;}
+    document.getElementById("merge").addEventListener("click",()=>{
+      try{const urls=parseInputLines(input.value),merged=mergeUrls(urls);showResult(merged);setStatus(`Готово. Оброблено URL: ${urls.length}.`,"success");}
+      catch(error){resetResult();setStatus(error.message,"error");}
+    });
+    document.getElementById("sample").addEventListener("click",()=>{
+      input.value=["https://example.com/search?category=books,films&page=1","https://example.com/search?category=films,music&page=2","https://example.com/search?tag=new&tag=sale"].join("\n");
+      setStatus("Приклад завантажено. Натисни «Об'єднати URL».");input.focus();
+    });
+    document.getElementById("clear").addEventListener("click",()=>{input.value="";resetResult();setStatus("Поля очищено.");input.focus();});
+    copyButton.addEventListener("click",async()=>{
+      if(!mergedUrl)return;
+      try{await navigator.clipboard.writeText(mergedUrl);setStatus("Посилання скопійовано в буфер обміну.","success");}
+      catch{setStatus("Не вдалося скопіювати автоматично. Виділи результат і скопіюй його вручну.","error");}
+    });
+    downloadButton.addEventListener("click",()=>{
+      if(!mergedUrl)return;
+      const blob=new Blob([mergedUrl+"\n"],{type:"text/plain;charset=utf-8"}),objectUrl=URL.createObjectURL(blob),link=document.createElement("a");
+      link.href=objectUrl;link.download="merged-url.txt";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(objectUrl);
+      setStatus("Файл merged-url.txt підготовлено.","success");
+    });
+  </script>
+</body>
+</html>
