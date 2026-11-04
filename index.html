@@ -200,6 +200,27 @@
       result.textContent=t("resultPlaceholder");result.classList.add("empty");copyButton.disabled=true;downloadButton.disabled=true;
       openUrlLink.removeAttribute("href");openUrlLink.setAttribute("aria-disabled","true");openUrlLink.setAttribute("tabindex","-1");
     }
+    input.addEventListener("paste",event=>{
+      const pasted=event.clipboardData?.getData("text");
+      if(!pasted||input.selectionStart!==input.selectionEnd)return;
+      const start=input.selectionStart,end=input.selectionEnd,original=input.value;
+      const atEnd=start===original.length;
+      const lineStart=original.lastIndexOf("\n",start-1)+1;
+      const lineEndIndex=original.indexOf("\n",start);
+      const lineEnd=lineEndIndex===-1?original.length:lineEndIndex;
+      const emptyLine=original.slice(lineStart,lineEnd).trim()==="";
+      if(!atEnd&&!emptyLine)return;
+      const lines=pasted.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);
+      if(lines.length===0||!lines.every(line=>{
+        try{const url=new URL(line);return url.protocol==="http:"||url.protocol==="https:";}catch{return false;}
+      }))return;
+      const normalized=pasted.replace(/\r\n?/g,"\n");
+      const prefix=atEnd&&start>0&&original[start-1]!=="\n"?"\n":"";
+      const suffix=normalized.endsWith("\n")||original[start]==="\n"?"":"\n";
+      const insertion=prefix+normalized+suffix;
+      event.preventDefault();
+      input.setRangeText(insertion,start,end,"end");
+    });
     document.getElementById("merge").addEventListener("click",()=>{
       try{const urls=parseInputLines(input.value),merged=mergeUrls(urls);fullMergedUrl=merged;enabledParams=new Set(new URL(fullMergedUrl).searchParams.keys());renderParamControls();updateMergedUrl();setStatus(t("done",{n:urls.length}),"success");}
       catch(error){resetResult();setStatus(error.message,"error");}
