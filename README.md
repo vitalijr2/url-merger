@@ -1,7 +1,5 @@
 # URL Merger
 
-[![Hits](https://hits.sh/github.com/vitalijr2/url-merger.svg?color=9f9f9f&labelColor=464646&logo=github)](https://hits.sh/github.com/vitalijr2/url-merger/)
-
 [Українська](#українська) | [English](#english)
 
 ## Українська
@@ -51,3 +49,8 @@ Open `index.html` in a modern web browser.
 - If any value for a key contains a comma, all values for that key are merged into a list, with duplicates removed and the original order preserved.
 - For keys whose values do not contain commas, repeated values remain as separate parameters.
 - All processing takes place locally in your browser.
+
+---
+
+[![Hits](https://hits.sh/github.com/vitalijr2/url-merger.svg?color=9f9f9f&labelColor=464646&logo=github)](https://hits.sh/github.com/vitalijr2/url-merger/)
+
