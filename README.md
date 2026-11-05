@@ -2,57 +2,80 @@
 
 [Українська](#українська) | [English](#english)
 
+**Live app / Вебзастосунок:** https://vitalijr2.github.io/url-merger/
+
 ## Українська
 
-Невеликий автономний інструмент для об'єднання query-параметрів кількох URL одного ресурсу. Уся обробка виконується в браузері; сервер, зовнішні бібліотеки та збірка не потрібні.
+**URL Merger** — автономний вебінструмент для об'єднання query-параметрів кількох URL одного ресурсу. Обробка відбувається локально у браузері: введені посилання не надсилаються на сервер. Для роботи не потрібні реєстрація, бекенд, сторонні бібліотеки чи збірка.
 
-## Локальний запуск
+### Можливості
 
-Відкрий `index.html` у сучасному браузері.
+- Вставлення одного або кількох URL, по одному на рядок; порожні рядки ігноруються.
+- Автоматичний перенос після вставлення коректних HTTP/HTTPS URL наприкінці поля або в порожньому рядку. Ручне введення тексту не змінюється.
+- Об'єднання параметрів зі збереженням порядку та видаленням дублікатів між різними URL за правилами нижче.
+- Перегляд параметрів результату: назва, кількість входжень і значення, включно з порожніми.
+- Вибір параметрів за допомогою чекбоксів; кнопки **Усі** та **Жодного**. Результат оновлюється після кожної зміни.
+- Копіювання результату, відкриття в новій вкладці та завантаження як `merged-url.txt`.
+- Приклад вхідних URL та очищення поля.
+- Інтерфейс 11 мовами: українська, англійська, польська, спрощена китайська, японська, німецька, французька, іспанська, португальська, суахілі та хауса. Обрана мова зберігається в браузері.
 
-## Публікація через GitHub Pages
+### Правила об'єднання
 
-1. У репозиторії відкрий **Settings → Pages**.
-2. У розділі **Build and deployment** вибери **Source: GitHub Actions**.
-3. Workflow автоматично запускається після кожного push у гілку `main`; його також можна запустити вручну у вкладці **Actions**.
-4. Після успішного запуску сайт буде доступний за адресою  
-   `https://<твій username>.github.io/url-merger/`.
+1. Підтримуються HTTP та HTTPS URL без вбудованих імен користувачів і паролів.
+2. Усі URL повинні мати однакові протокол, домен/порт, шлях і фрагмент (`#...`). Порівняння виконується після нормалізації через браузерний `URL`.
+3. Параметри з різними назвами об'єднуються.
+4. Якщо хоча б одне значення параметра містить кому, значення цього параметра об'єднуються в один список через кому. Однакові непорожні елементи з різних URL прибираються; повтори в межах одного URL зберігаються.
+5. Якщо жодне значення параметра не містить коми, повторювані входження залишаються окремими. Однакові непорожні значення прибираються лише між різними URL.
+6. Порожні значення зберігаються; параметри без знака `=` інтерпретуються як параметри з порожнім значенням. У випадку списків із комами порожні елементи входять до спільного списку.
 
-## Правила об'єднання
+### Локальний запуск
 
-- Вхідні URL повинні мати однакові протокол, host/порт, шлях і fragment.
-- Різні query-ключі об'єднуються.
-- Якщо значення ключа містить кому, усі значення цього ключа зливаються в список із видаленням дублікатів і збереженням порядку.
-- Для ключів без коми повторювані значення залишаються окремими параметрами.
-- Обробка відбувається лише локально в браузері.
+Відкрий `index.html` у сучасному браузері. Залежностей та кроку збірки немає.
+
+### Публікація через GitHub Pages
+
+1. Відкрий **Settings → Pages** у репозиторії.
+2. Вибери **Build and deployment → Source: GitHub Actions**.
+3. Workflow `.github/workflows/deploy.yml` запускається після push у `main` або вручну через **Actions**.
+4. Опублікований застосунок: https://vitalijr2.github.io/url-merger/
 
 ---
 
 ## English
 
-A lightweight, standalone tool for merging query parameters from multiple URLs pointing to the same resource. All processing takes place in your browser; no server, external libraries, or build step is required.
+**URL Merger** is a standalone browser tool for combining query parameters from multiple URLs pointing to the same resource. All URL processing happens locally in your browser: input URLs are not sent to a server. No account, backend, external libraries, or build step required.
 
-## Run locally
+### Features
 
-Open `index.html` in a modern web browser.
+- Paste one or more URLs, one per line; blank lines are ignored.
+- Automatic line break after pasting valid HTTP/HTTPS URLs at the end of the input or on an empty line. Typing is unaffected.
+- Merge query parameters in order, deduplicating values across different URLs according to the rules below.
+- Inspect result parameters with their names, occurrence counts, and values (including empty values).
+- Include or exclude parameter names using checkboxes, or use **All** / **None**; the output updates immediately.
+- Copy the resulting URL, open it in a new tab, or download it as `merged-url.txt`.
+- Load sample URLs or clear the input.
+- UI in 11 languages: Ukrainian, English, Polish, Simplified Chinese, Japanese, German, French, Spanish, Portuguese, Swahili, and Hausa. The selected language is saved in the browser.
 
-## Deploy with GitHub Pages
+### Merging rules
 
-1. In your repository, open **Settings → Pages**.
-2. Under **Build and deployment**, select **Source: GitHub Actions**.
-3. The workflow runs automatically after every push to the `main` branch. You can also trigger it manually from the **Actions** tab.
-4. Once the workflow completes successfully, the site will be available at  
-   `https://<your username>.github.io/url-merger/`.
+1. HTTP and HTTPS URLs are supported; embedded usernames and passwords are rejected.
+2. All URLs must have the same protocol, host/port, path, and fragment (`#...`), compared after browser `URL` normalization.
+3. Different query parameter names are combined.
+4. If any value of a parameter contains a comma, its values are combined into one comma-separated list. Duplicate nonempty items across different URLs are removed; repeats within the same URL are preserved.
+5. Otherwise, repeated parameter occurrences stay separate. Duplicate nonempty values are removed only across different URLs.
+6. Empty values are preserved; parameters without `=` are interpreted as having an empty value. In comma-separated lists, empty items become part of the combined list.
 
-## Merging rules
+### Run locally
 
-- All input URLs must have the same protocol, host/port, path, and fragment.
-- Query parameters with different keys are combined.
-- If any value for a key contains a comma, all values for that key are merged into a list, with duplicates removed and the original order preserved.
-- For keys whose values do not contain commas, repeated values remain as separate parameters.
-- All processing takes place locally in your browser.
+Open `index.html` in a modern browser. No dependencies or build process are needed.
+
+### Deploy with GitHub Pages
+
+1. Open **Settings → Pages** in the repository.
+2. Choose **Build and deployment → Source: GitHub Actions**.
+3. The workflow at `.github/workflows/deploy.yml` runs on pushes to `main` or manually from **Actions**.
+4. Published app: https://vitalijr2.github.io/url-merger/
 
 ---
 
 [![Hits](https://hits.sh/github.com/vitalijr2/url-merger.svg?color=9f9f9f&labelColor=464646&logo=github)](https://hits.sh/github.com/vitalijr2/url-merger/)
-
