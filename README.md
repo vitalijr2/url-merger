@@ -15,7 +15,8 @@
 1. У репозиторії відкрий **Settings → Pages**.
 2. У розділі **Build and deployment** вибери **Source: GitHub Actions**.
 3. Workflow автоматично запускається після кожного push у гілку `main`; його також можна запустити вручну у вкладці **Actions**.
-4. Після успішного запуску сайт буде доступний за адресою `https://<твій username>.github.io/url-merger/`.
+4. Після успішного запуску сайт буде доступний за адресою  
+   `https://<твій username>.github.io/url-merger/`.
 
 ## Правила об'єднання
 
@@ -40,7 +41,8 @@ Open `index.html` in a modern web browser.
 1. In your repository, open **Settings → Pages**.
 2. Under **Build and deployment**, select **Source: GitHub Actions**.
 3. The workflow runs automatically after every push to the `main` branch. You can also trigger it manually from the **Actions** tab.
-4. Once the workflow completes successfully, the site will be available at `https://<your username>.github.io/url-merger/`.
+4. Once the workflow completes successfully, the site will be available at  
+   `https://<your username>.github.io/url-merger/`.
 
 ## Merging rules
 
