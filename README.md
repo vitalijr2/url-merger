@@ -1,5 +1,7 @@
 # URL Merger
 
+[![Hits](https://hits.sh/github.com/vitalijr2/url-merger.svg?color=9f9f9f&labelColor=464646&logo=github)](https://hits.sh/github.com/vitalijr2/url-merger/)
+
 [Українська](#українська) | [English](#english)
 
 ## Українська
