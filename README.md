@@ -37,8 +37,8 @@
 1. Відкрий **Settings → Pages** у репозиторії.
 2. Вибери **Build and deployment → Source: GitHub Actions**.
 3. Workflow `.github/workflows/deploy.yml` запускається після push у `main` або вручну через **Actions**.
-4. Опублікований застосунок:
-   https://<твій username>.github.io/url-merger/
+4. Опублікований застосунок:  
+   `https://<твій username>.github.io/url-merger/`
 
 ---
 
@@ -75,8 +75,8 @@ Open `index.html` in a modern browser. No dependencies or build process are need
 1. Open **Settings → Pages** in the repository.
 2. Choose **Build and deployment → Source: GitHub Actions**.
 3. The workflow at `.github/workflows/deploy.yml` runs on pushes to `main` or manually from **Actions**.
-4. Published app:
-   https://<your username>.github.io/url-merger/
+4. Published app:  
+   `https://<your username>.github.io/url-merger/`
 
 ---
 
