@@ -1,0 +1,19 @@
+{
+  "id": "/url-merger/",
+  "name": "URL Merger",
+  "short_name": "URL Merger",
+  "description": "Merge query parameters from multiple URLs locally in your browser.",
+  "start_url": "/url-merger/",
+  "scope": "/url-merger/",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#315eea",
+  "icons": [
+    {
+      "src": "./assets/url-merger-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
