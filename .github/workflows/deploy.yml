@@ -35,20 +35,28 @@ jobs:
           # Only app-facing changes change the deployed version.
           revision = subprocess.check_output(
               ["git", "log", "-1", "--format=%H", "--", "index.html",
-               "manifest.webmanifest", "sw.js", "assets/"],
+               "manifest.webmanifest", "sw.js", "assets/", "version.json"],
               text=True
           ).strip()
           if not revision:
               raise SystemExit("No application revision found")
-          pathlib.Path("version.json").write_text(
-              json.dumps({"version": revision[:12]}, indent=2) + "\n",
+          version_file = pathlib.Path("version.json")
+          config = json.loads(version_file.read_text(encoding="utf-8"))
+          if (not isinstance(config, dict) or
+              any(type(config.get(key)) is not int or config[key] < 0
+                  for key in ("major", "minor"))):
+              raise SystemExit("version.json must contain nonnegative integer major and minor")
+          build = revision[:12]
+          full_version = f'{config["major"]}.{config["minor"]}.0+{build}'
+          version_file.write_text(
+              json.dumps({**config, "build": build, "version": full_version}, indent=2) + "\n",
               encoding="utf-8"
           )
           sw = pathlib.Path("sw.js")
           source = sw.read_text(encoding="utf-8")
           if "__APP_VERSION__" not in source:
               raise SystemExit("Missing Service Worker version placeholder")
-          sw.write_text(source.replace("__APP_VERSION__", revision[:12]),
+          sw.write_text(source.replace("__APP_VERSION__", full_version),
                         encoding="utf-8")
           PY
       - name: Upload site artifact
