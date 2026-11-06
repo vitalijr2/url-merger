@@ -6,6 +6,11 @@
   <meta name="theme-color" content="#f5f7fb">
   <title>URL Merger — об'єднання параметрів URL</title>
   <meta name="description" content="URL Merger combines query parameters from multiple URLs into one link. Remove duplicates, choose parameters, and copy or open the result — all locally in your browser.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="URL Merger">
+  <link rel="apple-touch-icon" href="./assets/url-merger-logo.png">
   <link rel="canonical" href="https://vitalijr2.github.io/url-merger/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="URL Merger">
@@ -275,6 +280,15 @@
     const detectedLanguage=browserLanguage?Object.keys(translations).find(code=>browserLanguage===code.toLowerCase()||browserLanguage.startsWith(code.toLowerCase()+"-")):"en";
     applyLanguage(savedLanguage&&translations[savedLanguage]?savedLanguage:detectedLanguage);
     languageSelect.addEventListener("change",()=>applyLanguage(languageSelect.value));
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(error => {
+          console.warn("Service Worker registration failed:", error);
+        });
+      });
+    }
   </script>
 </body>
 </html>
