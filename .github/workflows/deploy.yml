@@ -20,8 +20,37 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Validate site entry point
         run: test -s index.html
+      - name: Generate deployed version and Service Worker
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import subprocess
+
+          # Only app-facing changes change the deployed version.
+          revision = subprocess.check_output(
+              ["git", "log", "-1", "--format=%H", "--", "index.html",
+               "manifest.webmanifest", "sw.js", "assets/"],
+              text=True
+          ).strip()
+          if not revision:
+              raise SystemExit("No application revision found")
+          pathlib.Path("version.json").write_text(
+              json.dumps({"version": revision[:12]}, indent=2) + "\n",
+              encoding="utf-8"
+          )
+          sw = pathlib.Path("sw.js")
+          source = sw.read_text(encoding="utf-8")
+          if "__APP_VERSION__" not in source:
+              raise SystemExit("Missing Service Worker version placeholder")
+          sw.write_text(source.replace("__APP_VERSION__", revision[:12]),
+                        encoding="utf-8")
+          PY
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
