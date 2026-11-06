@@ -1,9 +1,11 @@
-const CACHE_NAME = "url-merger-v1";
+const CACHE_NAME = "url-merger-v2";
 const APP_FILES = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/url-merger-logo.png"
+  "./assets/icon-192.png",
+  "./assets/icon-512.png",
+  "./assets/apple-touch-icon.png"
 ];
 
 self.addEventListener("install", event => {
