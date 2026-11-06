@@ -296,7 +296,7 @@
       const notice = document.getElementById("updateNotice");
       const draftKey = "url-merger-update-draft";
       let pendingWorker = null;
-      let deferredVersion = null;
+      let dismissedWorker = null;
       let refreshing = false;
 
       try {
@@ -307,8 +307,8 @@
         }
       } catch {}
 
-      function offerUpdate(worker, version) {
-        if (!worker || version === deferredVersion) return;
+      function offerUpdate(worker) {
+        if (!worker || worker === dismissedWorker) return;
         pendingWorker = worker;
         notice.hidden = false;
       }
@@ -327,7 +327,7 @@
         pendingWorker.postMessage({type: "SKIP_WAITING"});
       });
       document.getElementById("updateLater").addEventListener("click", () => {
-        deferredVersion = pendingWorker?.scriptURL || "deferred";
+        dismissedWorker = pendingWorker;
         notice.hidden = true;
         pendingWorker = null;
       });
