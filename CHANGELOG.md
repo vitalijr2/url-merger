@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Added automated unit tests for URL merging, executed by GitHub Actions before deployment.
 * Added a separate **Clear** action for the merged result, preserving the input URLs.
+* Added a **Paste from clipboard** button for input URLs, with localized feedback.
 
 ### Changed
 
@@ -18,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Preserved the merged result and selected parameters when switching interface languages.
 * Renamed the input **Clear** action to **Clear all**, retaining its existing behavior.
 * Updated offline caching and deployment version tracking to include the extracted JavaScript files.
+* Made the merged result more prominent and moved **Copy result** next to its heading.
+* Moved **Clear all** alongside **Clear result** and gave both buttons a consistent outlined appearance.
+* Added temporary **Copied** feedback on the copy button without replacing the existing status message.
 
 ### Removed
 
