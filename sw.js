@@ -4,6 +4,8 @@ const CACHE_NAME = "url-merger-" + APP_VERSION;
 const APP_FILES = [
   "./",
   "./index.html",
+  "./merger.js",
+  "./translation.js",
   "./manifest.webmanifest",
   "./version.json",
   "./assets/icon-192.png",
