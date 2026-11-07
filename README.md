@@ -22,6 +22,18 @@
 - Приклад вхідних URL та очищення поля.
 - Інтерфейс 11 мовами: українська, англійська, польська, спрощена китайська, японська, німецька, французька, іспанська, португальська, суахілі та хауса. Обрана мова зберігається в браузері.
 
+### Як скопіювати URL усіх відкритих вкладок
+
+Якщо потрібні адреси з кількох вкладок браузера, необов'язково копіювати кожну окремо:
+
+- **Vivaldi:** скористайся вбудованою можливістю копіювання посилань із вибраних вкладок (назва команди залежить від версії та контекстного меню).
+- **Chrome, Edge, Brave:** встанови розширення для копіювання URL вкладок, наприклад *Copy All URLs*.
+- **Firefox:** скористайся розширенням для копіювання адрес вкладок, наприклад *Copy Tabs*.
+
+Скопіюй адреси **у форматі звичайного тексту, по одному URL на рядок**, і встав їх у URL Merger. Якщо розширення дозволяє, вибери лише вкладки поточного вікна.
+
+**Важливо:** URL Merger не потребує розширень і не має доступу до вкладок браузера. Він об'єднує лише URL, які ти сам вставиш. Для успішного об'єднання адреси мають відповідати [правилам об'єднання](#правила-обєднання).
+
 ### Правила об'єднання
 
 1. Підтримуються HTTP та HTTPS URL без вбудованих імен користувачів і паролів.
@@ -62,6 +74,18 @@
 - Keyboard shortcuts: **Ctrl/⌘+Enter** to merge, **Ctrl/⌘+Shift+C** to copy the result, and **Ctrl/⌘+Shift+Backspace** to clear the result. Use **Tab** to navigate controls.
 - Load sample URLs or clear the input.
 - UI in 11 languages: Ukrainian, English, Polish, Simplified Chinese, Japanese, German, French, Spanish, Portuguese, Swahili, and Hausa. The selected language is saved in the browser.
+
+### How to copy URLs from open tabs
+
+To collect URLs from several browser tabs, you don't have to copy each address individually:
+
+- **Vivaldi:** use its built-in option to copy links from selected tabs (the command name may vary by version and context menu).
+- **Chrome, Edge, Brave:** install a tab URL copying extension, such as *Copy All URLs*.
+- **Firefox:** use a tab URL copying extension, such as *Copy Tabs*.
+
+Copy the addresses **as plain text, one URL per line**, and paste them into URL Merger. If the extension offers a choice, select tabs from the current window only.
+
+**Note:** URL Merger requires no extensions and cannot access your browser tabs. It processes only the URLs you paste. To merge successfully, the URLs must satisfy the [merging rules](#merging-rules).
 
 ### Merging rules
 
