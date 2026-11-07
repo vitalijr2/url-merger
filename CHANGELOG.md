@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2026-11-07
 
 ### Added
 
@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Improved keyboard Tab navigation through the application controls.
 * Extracted shared styles into `style.css` for the main and About pages.
 * Extended offline caching and deployment version tracking to include the About page and shared stylesheet.
+* Unified and compacted the headers on both pages to save vertical space, especially on mobile.
 
 ### Removed
 
