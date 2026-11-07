@@ -180,11 +180,13 @@
     const input=document.getElementById("urls"), result=document.getElementById("result"), status=document.getElementById("status");
     const copyButton=document.getElementById("copy"), openUrlLink=document.getElementById("openUrl");
     let mergedUrl="",fullMergedUrl="";
+    let copyFeedbackTimer=null;
+    function resetCopyFeedback(){clearTimeout(copyFeedbackTimer);copyFeedbackTimer=null;copyButton.textContent=t("copy");}
     const paramControls=document.getElementById("paramControls"),paramList=document.getElementById("paramList");
     let enabledParams=new Set();
     function setStatus(message,type=""){status.textContent=message;status.className="status"+(type?" "+type:"");}
     function parseInputLines(text){return text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);}
-    function showResult(value){mergedUrl=value;result.textContent=value;result.classList.remove("empty");copyButton.disabled=false;openUrlLink.href=value;openUrlLink.setAttribute("aria-disabled","false");openUrlLink.removeAttribute("tabindex");}
+    function showResult(value){resetCopyFeedback();mergedUrl=value;result.textContent=value;result.classList.remove("empty");copyButton.disabled=false;openUrlLink.href=value;openUrlLink.setAttribute("aria-disabled","false");openUrlLink.removeAttribute("tabindex");}
     function updateMergedUrl(){
       const url=new URL(fullMergedUrl),filtered=new URLSearchParams();
       for(const [key,value] of url.searchParams.entries()) if(enabledParams.has(key)) filtered.append(key,value);
@@ -216,6 +218,7 @@
       updateMergedUrl();
     }
     function resetResult(){
+      resetCopyFeedback();
       mergedUrl="";fullMergedUrl="";enabledParams.clear();paramList.replaceChildren();paramControls.hidden=true;
       result.textContent=t("resultPlaceholder");result.classList.add("empty");copyButton.disabled=true;
       openUrlLink.removeAttribute("href");openUrlLink.setAttribute("aria-disabled","true");openUrlLink.setAttribute("tabindex","-1");
@@ -263,8 +266,8 @@
     document.getElementById("selectNoParams").addEventListener("click",()=>setAllParams(false));
     copyButton.addEventListener("click",async()=>{
       if(!mergedUrl)return;
-      try{await navigator.clipboard.writeText(mergedUrl);setStatus(t("copied"),"success");}
-      catch{setStatus(t("copyFail"),"error");}
+      try{await navigator.clipboard.writeText(mergedUrl);resetCopyFeedback();copyButton.textContent=t("copied");copyFeedbackTimer=setTimeout(resetCopyFeedback,1800);}
+      catch{resetCopyFeedback();setStatus(t("copyFail"),"error");}
     });
     document.getElementById("clearResult").addEventListener("click",()=>{resetResult();setStatus(t("resultCleared"));});
   </script>
