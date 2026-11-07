@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+* Added automated unit tests for URL merging, executed by GitHub Actions before deployment.
+* Added a separate **Clear** action for the merged result, preserving the input URLs.
+
+### Changed
+
+* Extracted URL merging logic into `merger.js` and interface translations into `translation.js`.
+* Preserved the merged result and selected parameters when switching interface languages.
+* Renamed the input **Clear** action to **Clear all**, retaining its existing behavior.
+* Updated offline caching and deployment version tracking to include the extracted JavaScript files.
+
+### Removed
+
+* Removed the option to download the merged result as a text file.
+
 ## [1.0.0] - 2026-11-06
 
 ### Added
