@@ -83,6 +83,13 @@
     .result.empty { color: var(--placeholder); }
     .result-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
     .result-heading .section-heading { margin: 0; }
+    .result-actions { position: relative; }
+    .result-section { display: flex; flex-direction: column; }
+    .result-heading { order: 0; }
+    .result-section > .result { order: 1; }
+    .result-section > .param-controls { order: 2; }
+    .result-actions { order: 3; }
+    .result-section > .status { order: 4; }
     .result-heading button { min-height: 34px; padding: 5px 11px; font-size: 12px; } .status { min-height: 22px; margin: 10px 0 0; color: var(--muted); font-size: 13px; }
     .param-controls { margin-top: 16px; padding: 15px; border: 1px solid var(--border); border-radius: 11px; background: var(--field); }
     .param-controls[hidden] { display: none; }
@@ -134,7 +141,7 @@
         <button class="secondary" id="pasteClipboard" type="button" data-i18n="pasteClipboard">Вставити з буфера</button>
       </div>
       <div class="result-section">
-        <div class="result-heading"><div class="section-heading" data-i18n="resultHeading">Результат</div><button class="secondary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button></div>
+        <div class="result-heading"><div class="section-heading" data-i18n="resultHeading">Результат</div></div>
         <output class="result empty" id="result" data-i18n="resultPlaceholder" aria-live="polite">Тут з'явиться об'єднане посилання.</output>
         <section class="param-controls" id="paramControls" aria-labelledby="paramControlsTitle" hidden>
           <div class="param-controls-header">
@@ -146,7 +153,8 @@
           </div>
           <div class="param-list" id="paramList"></div>
         </section>
-        <div class="toolbar">
+        <div class="toolbar result-actions">
+          <button class="secondary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button>
           <a class="secondary button-link" id="openUrl" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1" data-i18n="openUrl">Відкрити URL ↗</a>
           <button class="secondary" id="clearResult" type="button" data-i18n="clear">Очистити</button>
           <button class="secondary" id="clear" type="button" data-i18n="clearAll">Очистити все</button>
@@ -270,6 +278,15 @@
       catch{resetCopyFeedback();setStatus(t("copyFail"),"error");}
     });
     document.getElementById("clearResult").addEventListener("click",()=>{resetResult();setStatus(t("resultCleared"));});
+    document.addEventListener("keydown",event=>{
+      if(event.repeat||event.isComposing||event.altKey)return;
+      const modifier=event.ctrlKey||event.metaKey;
+      if(!modifier)return;
+      const key=event.key.toLowerCase();
+      if(key==="enter"&&!event.shiftKey){event.preventDefault();document.getElementById("merge").click();}
+      else if(key==="c"&&event.shiftKey&&mergedUrl){event.preventDefault();copyButton.click();}
+      else if(key==="backspace"&&event.shiftKey&&fullMergedUrl){event.preventDefault();document.getElementById("clearResult").click();}
+    });
   </script>
   <script>
     const languageSelect=document.getElementById("language");
