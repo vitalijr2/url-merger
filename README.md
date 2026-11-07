@@ -10,6 +10,8 @@
 
 ### Можливості
 
+- Окрема сторінка [«Про застосунок»](https://vitalijr2.github.io/url-merger/about.html) з можливостями, гарячими клавішами, конфіденційністю та поточною версією.
+
 - Вставлення одного або кількох URL, по одному на рядок; порожні рядки ігноруються.
 - Автоматичний перенос після вставлення коректних HTTP/HTTPS URL наприкінці поля або в порожньому рядку. Ручне введення тексту не змінюється.
 - Об'єднання параметрів зі збереженням порядку та видаленням дублікатів між різними URL за правилами нижче.
@@ -48,6 +50,8 @@
 **URL Merger** is a standalone browser tool for combining query parameters from multiple URLs pointing to the same resource. All URL processing happens locally in your browser: input URLs are not sent to a server. No account, backend, external libraries, or build step required.
 
 ### Features
+
+- A dedicated [About page](https://vitalijr2.github.io/url-merger/about.html) with features, keyboard shortcuts, privacy information, and the deployed version.
 
 - Paste one or more URLs, one per line; blank lines are ignored.
 - Automatic line break after pasting valid HTTP/HTTPS URLs at the end of the input or on an empty line. Typing is unaffected.
