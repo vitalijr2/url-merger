@@ -15,7 +15,7 @@
 - Об'єднання параметрів зі збереженням порядку та видаленням дублікатів між різними URL за правилами нижче.
 - Перегляд параметрів результату: назва, кількість входжень і значення, включно з порожніми.
 - Вибір параметрів за допомогою чекбоксів; кнопки **Усі** та **Жодного**. Результат оновлюється після кожної зміни.
-- Копіювання результату, відкриття в новій вкладці та завантаження як `merged-url.txt`.
+- Копіювання результату та відкриття в новій вкладці. Окреме очищення результату або всіх введених URL разом із результатом.
 - Приклад вхідних URL та очищення поля.
 - Інтерфейс 11 мовами: українська, англійська, польська, спрощена китайська, японська, німецька, французька, іспанська, португальська, суахілі та хауса. Обрана мова зберігається в браузері.
 
@@ -53,7 +53,7 @@
 - Merge query parameters in order, deduplicating values across different URLs according to the rules below.
 - Inspect result parameters with their names, occurrence counts, and values (including empty values).
 - Include or exclude parameter names using checkboxes, or use **All** / **None**; the output updates immediately.
-- Copy the resulting URL, open it in a new tab, or download it as `merged-url.txt`.
+- Copy the resulting URL or open it in a new tab. Clear only the result, or clear both the input URLs and the result.
 - Load sample URLs or clear the input.
 - UI in 11 languages: Ukrainian, English, Polish, Simplified Chinese, Japanese, German, French, Spanish, Portuguese, Swahili, and Hausa. The selected language is saved in the browser.
 
