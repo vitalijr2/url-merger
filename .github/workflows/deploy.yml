@@ -35,7 +35,8 @@ jobs:
           # Only app-facing changes change the deployed version.
           revision = subprocess.check_output(
               ["git", "log", "-1", "--format=%H", "--", "index.html",
-               "manifest.webmanifest", "sw.js", "assets/", "version.json"],
+               "manifest.webmanifest", "sw.js", "merger.js", "translation.js",
+               "assets/", "version.json"],
               text=True
           ).strip()
           if not revision:
