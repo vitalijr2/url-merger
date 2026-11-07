@@ -79,7 +79,11 @@
     .text-button { min-height: 36px; padding: 6px 9px; color: var(--muted); background: transparent; border: 0; font-weight: 600; }
     .text-button:hover { color: var(--text); background: var(--text-hover); }
     .result-section { margin-top: 25px; } .result { min-height: 78px !important; white-space: pre-wrap; overflow-wrap: anywhere; }
-    .result.empty { color: var(--placeholder); } .status { min-height: 22px; margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+    .result:not(.empty) { border: 2px solid var(--accent); background: var(--details); font-weight: 600; box-shadow: 0 0 0 3px rgba(49,94,234,.07); }
+    .result.empty { color: var(--placeholder); }
+    .result-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
+    .result-heading .section-heading { margin: 0; }
+    .result-heading button { min-height: 34px; padding: 5px 11px; font-size: 12px; } .status { min-height: 22px; margin: 10px 0 0; color: var(--muted); font-size: 13px; }
     .param-controls { margin-top: 16px; padding: 15px; border: 1px solid var(--border); border-radius: 11px; background: var(--field); }
     .param-controls[hidden] { display: none; }
     .param-controls-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
@@ -127,10 +131,10 @@
       <div class="toolbar">
         <button class="primary" id="merge" type="button" data-i18n="merge">Об'єднати URL</button>
         <button class="secondary" id="sample" type="button" data-i18n="sample">Завантажити приклад</button>
-        <button class="text-button" id="clear" type="button" data-i18n="clearAll">Очистити все</button>
+        <button class="secondary" id="pasteClipboard" type="button" data-i18n="pasteClipboard">Вставити з буфера</button>
       </div>
       <div class="result-section">
-        <div class="section-heading" data-i18n="resultHeading">Результат</div>
+        <div class="result-heading"><div class="section-heading" data-i18n="resultHeading">Результат</div><button class="secondary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button></div>
         <output class="result empty" id="result" data-i18n="resultPlaceholder" aria-live="polite">Тут з'явиться об'єднане посилання.</output>
         <section class="param-controls" id="paramControls" aria-labelledby="paramControlsTitle" hidden>
           <div class="param-controls-header">
@@ -143,9 +147,9 @@
           <div class="param-list" id="paramList"></div>
         </section>
         <div class="toolbar">
-          <button class="primary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button>
           <a class="secondary button-link" id="openUrl" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1" data-i18n="openUrl">Відкрити URL ↗</a>
           <button class="secondary" id="clearResult" type="button" data-i18n="clear">Очистити</button>
+          <button class="text-button" id="clear" type="button" data-i18n="clearAll">Очистити все</button>
         </div>
         <p class="status" id="status" data-i18n="waiting" role="status">Очікую на вхідні посилання.</p>
       </div>
@@ -244,6 +248,15 @@
     document.getElementById("sample").addEventListener("click",()=>{
       input.value=["https://example.com/search?category=books,films&page=1","https://example.com/search?category=films,music&page=2","https://example.com/search?tag=new&tag=sale"].join("\n");
       setStatus(t("sampleLoaded"));input.focus();
+    });
+    document.getElementById("pasteClipboard").addEventListener("click",async()=>{
+      try{
+        const text=await navigator.clipboard.readText();
+        if(!text){setStatus(t("clipboardEmpty"));return;}
+        const separator=input.value&&!input.value.endsWith("\n")?"\n":"";
+        input.value+=separator+text;
+        input.focus();setStatus(t("pasted"));
+      }catch{setStatus(t("pasteFail"),"error");}
     });
     document.getElementById("clear").addEventListener("click",()=>{input.value="";resetResult();setStatus(t("cleared"));input.focus();});
     document.getElementById("selectAllParams").addEventListener("click",()=>setAllParams(true));
