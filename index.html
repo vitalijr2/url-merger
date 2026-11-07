@@ -141,7 +141,7 @@
         <button class="secondary" id="pasteClipboard" type="button" data-i18n="pasteClipboard">Вставити з буфера</button>
       </div>
       <div class="result-section">
-        <div class="result-heading"><div class="section-heading" data-i18n="resultHeading">Результат</div></div>
+        <div class="result-heading"><div class="section-heading" data-i18n="resultHeading">Результат</div><button class="secondary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button></div>
         <output class="result empty" id="result" data-i18n="resultPlaceholder" aria-live="polite">Тут з'явиться об'єднане посилання.</output>
         <section class="param-controls" id="paramControls" aria-labelledby="paramControlsTitle" hidden>
           <div class="param-controls-header">
@@ -154,7 +154,6 @@
           <div class="param-list" id="paramList"></div>
         </section>
         <div class="toolbar result-actions">
-          <button class="secondary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button>
           <a class="secondary button-link" id="openUrl" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1" data-i18n="openUrl">Відкрити URL ↗</a>
           <button class="secondary" id="clearResult" type="button" data-i18n="clear">Очистити</button>
           <button class="secondary" id="clear" type="button" data-i18n="clearAll">Очистити все</button>
