@@ -48,6 +48,7 @@ jobs:
           revision = subprocess.check_output(
               ["git", "log", "-1", "--format=%H", "--", "index.html",
                "manifest.webmanifest", "sw.js", "merger.js", "translation.js",
+               "about.html", "style.css",
                "assets/", "version.json"],
               text=True
           ).strip()
