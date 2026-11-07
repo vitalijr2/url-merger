@@ -16,6 +16,7 @@
 - Перегляд параметрів результату: назва, кількість входжень і значення, включно з порожніми.
 - Вибір параметрів за допомогою чекбоксів; кнопки **Усі** та **Жодного**. Результат оновлюється після кожної зміни.
 - Вставлення тексту з буфера обміну кнопкою (за дозволом браузера), копіювання результату поруч із ним та відкриття в новій вкладці. Окреме очищення результату або всіх введених URL разом із результатом.
+- Гарячі клавіші: **Ctrl/⌘+Enter** — обʼєднати URL, **Ctrl/⌘+Shift+C** — скопіювати результат, **Ctrl/⌘+Shift+Backspace** — очистити результат. Перехід між елементами керування — клавішею **Tab**.
 - Приклад вхідних URL та очищення поля.
 - Інтерфейс 11 мовами: українська, англійська, польська, спрощена китайська, японська, німецька, французька, іспанська, португальська, суахілі та хауса. Обрана мова зберігається в браузері.
 
@@ -54,6 +55,7 @@
 - Inspect result parameters with their names, occurrence counts, and values (including empty values).
 - Include or exclude parameter names using checkboxes, or use **All** / **None**; the output updates immediately.
 - Paste text from the clipboard with a button (subject to browser permissions), copy the highlighted result beside it, or open it in a new tab. Clear only the result, or clear both the input URLs and the result.
+- Keyboard shortcuts: **Ctrl/⌘+Enter** to merge, **Ctrl/⌘+Shift+C** to copy the result, and **Ctrl/⌘+Shift+Backspace** to clear the result. Use **Tab** to navigate controls.
 - Load sample URLs or clear the input.
 - UI in 11 languages: Ukrainian, English, Polish, Simplified Chinese, Japanese, German, French, Spanish, Portuguese, Swahili, and Hausa. The selected language is saved in the browser.
 
