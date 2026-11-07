@@ -4,6 +4,8 @@ const CACHE_NAME = "url-merger-" + APP_VERSION;
 const APP_FILES = [
   "./",
   "./index.html",
+  "./about.html",
+  "./style.css",
   "./merger.js",
   "./translation.js",
   "./manifest.webmanifest",
@@ -45,7 +47,7 @@ self.addEventListener("fetch", event => {
 
   if (request.mode === "navigate") {
     event.respondWith(
-      caches.match("./index.html").then(cached => cached || fetch(request))
+      caches.match(request).then(cached => cached || fetch(request))
     );
     return;
   }
