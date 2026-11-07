@@ -19,7 +19,12 @@
     * { box-sizing: border-box; }
     body { margin: 0; padding: 36px 18px; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     main { width: min(860px,100%); margin: 0 auto; }
-    header { margin-bottom: 26px; }
+    header { margin-bottom: 18px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .header-top .eyebrow { margin: 0; letter-spacing: .02em; text-transform: none; line-height: 1.4; }
+    .brand-name { font-weight: 800; white-space: nowrap; }
+    .brand-description { font-weight: 600; }
+    .header-top .language-control { margin: 0; flex: 0 0 auto; }
     .eyebrow { margin: 0 0 8px; color: var(--accent); font-size: 12px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
     h1 { margin: 0; font-size: clamp(28px,5vw,38px); line-height: 1.15; letter-spacing: -.035em; }
     .intro { max-width: 680px; margin: 12px 0 0; color: var(--muted); }
@@ -78,4 +83,4 @@
     .language-control { display:flex; justify-content: flex-end; margin-bottom: 12px }
     .language-control select { padding: 7px 30px 7px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; font-size: 13px }
     .visually-hidden {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0}
-    @media (max-width:560px) { body { padding: 22px 12px; } .panel { padding: 17px; border-radius: 14px; } .toolbar button { flex: 1 1 auto; } textarea { min-height: 190px; } }
+    @media (max-width:560px) { .header-top { align-items: flex-start; } .header-top .eyebrow { font-size: 11px; } body { padding: 22px 12px; } .panel { padding: 17px; border-radius: 14px; } .toolbar button { flex: 1 1 auto; } textarea { min-height: 190px; } }
