@@ -127,7 +127,7 @@
       <div class="toolbar">
         <button class="primary" id="merge" type="button" data-i18n="merge">Об'єднати URL</button>
         <button class="secondary" id="sample" type="button" data-i18n="sample">Завантажити приклад</button>
-        <button class="text-button" id="clear" type="button" data-i18n="clear">Очистити</button>
+        <button class="text-button" id="clear" type="button" data-i18n="clearAll">Очистити все</button>
       </div>
       <div class="result-section">
         <div class="section-heading" data-i18n="resultHeading">Результат</div>
@@ -145,7 +145,7 @@
         <div class="toolbar">
           <button class="primary" id="copy" type="button" data-i18n="copy" disabled>Копіювати результат</button>
           <a class="secondary button-link" id="openUrl" target="_blank" rel="noopener noreferrer" aria-disabled="true" tabindex="-1" data-i18n="openUrl">Відкрити URL ↗</a>
-          <button class="secondary" id="download" type="button" data-i18n="download" disabled>Зберегти .txt</button>
+          <button class="secondary" id="clearResult" type="button" data-i18n="clear">Очистити</button>
         </div>
         <p class="status" id="status" data-i18n="waiting" role="status">Очікую на вхідні посилання.</p>
       </div>
@@ -174,13 +174,13 @@
   <script>
     "use strict";
     const input=document.getElementById("urls"), result=document.getElementById("result"), status=document.getElementById("status");
-    const copyButton=document.getElementById("copy"), downloadButton=document.getElementById("download"), openUrlLink=document.getElementById("openUrl");
+    const copyButton=document.getElementById("copy"), openUrlLink=document.getElementById("openUrl");
     let mergedUrl="",fullMergedUrl="";
     const paramControls=document.getElementById("paramControls"),paramList=document.getElementById("paramList");
     let enabledParams=new Set();
     function setStatus(message,type=""){status.textContent=message;status.className="status"+(type?" "+type:"");}
     function parseInputLines(text){return text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean);}
-    function showResult(value){mergedUrl=value;result.textContent=value;result.classList.remove("empty");copyButton.disabled=false;downloadButton.disabled=false;openUrlLink.href=value;openUrlLink.setAttribute("aria-disabled","false");openUrlLink.removeAttribute("tabindex");}
+    function showResult(value){mergedUrl=value;result.textContent=value;result.classList.remove("empty");copyButton.disabled=false;openUrlLink.href=value;openUrlLink.setAttribute("aria-disabled","false");openUrlLink.removeAttribute("tabindex");}
     function updateMergedUrl(){
       const url=new URL(fullMergedUrl),filtered=new URLSearchParams();
       for(const [key,value] of url.searchParams.entries()) if(enabledParams.has(key)) filtered.append(key,value);
@@ -213,7 +213,7 @@
     }
     function resetResult(){
       mergedUrl="";fullMergedUrl="";enabledParams.clear();paramList.replaceChildren();paramControls.hidden=true;
-      result.textContent=t("resultPlaceholder");result.classList.add("empty");copyButton.disabled=true;downloadButton.disabled=true;
+      result.textContent=t("resultPlaceholder");result.classList.add("empty");copyButton.disabled=true;
       openUrlLink.removeAttribute("href");openUrlLink.setAttribute("aria-disabled","true");openUrlLink.setAttribute("tabindex","-1");
     }
     input.addEventListener("paste",event=>{
@@ -253,12 +253,7 @@
       try{await navigator.clipboard.writeText(mergedUrl);setStatus(t("copied"),"success");}
       catch{setStatus(t("copyFail"),"error");}
     });
-    downloadButton.addEventListener("click",()=>{
-      if(!mergedUrl)return;
-      const blob=new Blob([mergedUrl+"\n"],{type:"text/plain;charset=utf-8"}),objectUrl=URL.createObjectURL(blob),link=document.createElement("a");
-      link.href=objectUrl;link.download="merged-url.txt";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(objectUrl);
-      setStatus(t("downloaded"),"success");
-    });
+    document.getElementById("clearResult").addEventListener("click",()=>{resetResult();setStatus(t("resultCleared"));});
   </script>
   <script>
     const languageSelect=document.getElementById("language");
