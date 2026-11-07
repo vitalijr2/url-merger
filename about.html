@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+  <title>About URL Merger</title>
+  <meta name="description" content="About URL Merger: features, keyboard shortcuts, privacy, and app version.">
+  <link rel="canonical" href="https://vitalijr2.github.io/url-merger/about.html">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .about-panel h2 { font-size: 18px; margin: 26px 0 10px; }
+    .about-panel h2:first-of-type { margin-top: 20px; }
+    .about-panel ul { padding-left: 22px; }
+    .about-panel li { margin: 8px 0; }
+    .about-panel table { width: 100%; border-collapse: collapse; }
+    .about-panel th,.about-panel td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+    .about-panel th { color: var(--muted); font-size: 13px; }
+    .about-panel kbd { display: inline-block; padding: 2px 6px; border: 1px solid var(--border); border-radius: 5px; background: var(--field); font: 13px ui-monospace,monospace; }
+    .about-panel .about-version { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+    .about-panel .back-link { display: inline-block; margin-bottom: 16px; color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="language-control">
+      <label class="visually-hidden" for="language">Language</label>
+      <select id="language" aria-label="Language">
+        <option value="uk">Українська</option><option value="en">English</option>
+        <option value="pl">Polski</option><option value="zh-CN">简体中文</option>
+        <option value="ja">日本語</option><option value="de">Deutsch</option>
+        <option value="fr">Français</option><option value="es">Español</option>
+        <option value="pt">Português</option><option value="sw">Kiswahili</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </div>
+    <p class="eyebrow">URL Merger</p>
+    <h1 data-i18n="aboutLink">Про застосунок</h1>
+  </header>
+  <section class="panel about-panel">
+    <a class="back-link" href="./" data-i18n="backToApp">Повернутися до застосунку</a>
+    <p data-i18n="aboutIntro">Безкоштовний інструмент для об'єднання параметрів URL. Усі посилання обробляються локально у браузері.</p>
+    <h2 data-i18n="aboutFeatures">Можливості</h2>
+    <ul>
+      <li data-i18n="aboutFeatureMerge">Об'єднання параметрів URL із видаленням дублікатів між посиланнями.</li>
+      <li data-i18n="aboutFeatureSelect">Вибір параметрів, копіювання результату та вставлення з буфера.</li>
+      <li data-i18n="aboutFeatureOffline">Працює офлайн, підтримує 11 мов і світлу та темну теми.</li>
+    </ul>
+    <h2 data-i18n="aboutShortcuts">Гарячі клавіші</h2>
+    <table>
+      <thead><tr><th data-i18n="aboutFeatures">Дія</th><th>Windows / Linux</th><th>macOS</th></tr></thead>
+      <tbody>
+        <tr><td data-i18n="aboutShortcutMerge">Об'єднати URL</td><td><kbd>Ctrl + Enter</kbd></td><td><kbd>⌘ + Enter</kbd></td></tr>
+        <tr><td data-i18n="aboutShortcutCopy">Копіювати результат</td><td><kbd>Ctrl + Shift + C</kbd></td><td><kbd>⌘ + Shift + C</kbd></td></tr>
+        <tr><td data-i18n="aboutShortcutClear">Очистити результат</td><td><kbd>Ctrl + Shift + Backspace</kbd></td><td><kbd>⌘ + Shift + Backspace</kbd></td></tr>
+      </tbody>
+    </table>
+    <p class="hint" style="margin:12px 0 0" data-i18n="aboutTab">Для переходу між елементами використовуйте Tab та Shift+Tab.</p>
+    <h2 data-i18n="aboutPrivacy">Конфіденційність</h2>
+    <p data-i18n="aboutPrivacyText">Введені URL не передаються на сервер. Обробка відбувається лише на вашому пристрої.</p>
+    <h2 data-i18n="aboutVersion">Версія</h2>
+    <p class="about-version" id="appVersion" data-i18n="aboutVersionUnknown">Немає даних про версію</p>
+  </section>
+  <footer>
+    <nav aria-label="Project links">
+      <a href="https://github.com/vitalijr2/url-merger" target="_blank" rel="noopener noreferrer" data-i18n="repository">Репозиторій проєкту на GitHub</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/vitalijr2/url-merger/issues/new/choose" target="_blank" rel="noopener noreferrer" data-i18n="reportIssue">Повідомити про помилку або запропонувати покращення</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/vitalijr2/url-merger/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Unlicense</a>
+    </nav>
+  </footer>
+</main>
+<script src="./translation.js"></script>
+<script>
+  "use strict";
+  const languageSelect=document.getElementById("language");
+  const versionElement=document.getElementById("appVersion");
+  function applyLanguage(language){
+    const selected=translations[language]?language:"en";
+    document.documentElement.lang=selected;
+    languageSelect.value=selected;
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      if(el===versionElement&&el.dataset.loaded==="true")return;
+      el.textContent=translations[selected][el.dataset.i18n]||translations.en[el.dataset.i18n]||el.dataset.i18n;
+    });
+    try{localStorage.setItem("url-merger-language",selected);}catch{}
+  }
+  let saved=null;
+  try{saved=localStorage.getItem("url-merger-language");}catch{}
+  const codes=Object.keys(translations);
+  const detected=(navigator.languages||[navigator.language||"en"]).map(v=>v.toLowerCase())
+    .map(v=>codes.find(code=>v===code.toLowerCase()||v.startsWith(code.toLowerCase()+"-")))
+    .find(Boolean)||"en";
+  applyLanguage(saved&&translations[saved]?saved:detected);
+  languageSelect.addEventListener("change",()=>applyLanguage(languageSelect.value));
+  fetch("./version.json",{cache:"no-store"}).then(response=>{
+    if(!response.ok)throw new Error("Version unavailable");
+    return response.json();
+  }).then(data=>{
+    if(typeof data.version==="string"&&data.version){
+      versionElement.textContent=data.version;
+      versionElement.dataset.loaded="true";
+    }
+  }).catch(()=>{});
+</script>
+</body>
+</html>
